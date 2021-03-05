@@ -2,6 +2,17 @@ firebase.auth().onAuthStateChanged(async function(user) {
   if (user) {
     // Signed in
     console.log('signed in')
+    
+    // Sign-out button
+    document.querySelector('.sign-in-or-sign-out').innerHTML = `
+    <button class="text-pink-500 underline sign-out">Sign Out</button>
+    `
+    document.querySelector('.sign-out').addEventListener('click', function(event) {
+    console.log('sign out clicked')
+    firebase.auth().signOut()
+    document.location.href = 'index.html'
+    })
+ 
   } else {
     // Signed out
     console.log('signed out')
