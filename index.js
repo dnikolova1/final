@@ -13,6 +13,15 @@ firebase.auth().onAuthStateChanged(async function(user) {
     document.location.href = 'index.html'
     })
  
+    // Render existing recipes
+    let response = await fetch('/.netlify/functions/get_recipes')
+    let recipes = await response.json()
+    for (let i=0; i<recipes.length; i++) {
+      let recipe = recipes[i]
+      renderPost(recipe)
+    }
+
+
   } else {
     // Signed out
     console.log('signed out')
