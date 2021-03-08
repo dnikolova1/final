@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Final</title>
+  <title>New Recipe</title>
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" type="text/css">
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.css" />
 </head>
@@ -21,17 +21,19 @@
       <div class="ml-auto text-sm sign-in-or-sign-out"></div>
     </div>
 
-    <div class="recipes">
-      <!-- Recepies rendered from JavaScript -->
-    </div>
-
-    <!-- New recipe button -->    
+    <!-- New recipe form -->
     <div>
-      <a href="newrecipe.html" class="ml-auto bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl">New Recipe</a>
+      <form class="w-full mt-8" action="index.html">
+        <input type="text" id="recipe-name" name="recipe-name" placeholder="Recipe Name" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <input type="text" id="recipe-url" name="recipe-url" placeholder="Recipe URL" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <input type="text" id="image-url" name="image-url" placeholder="Image URL" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <input type="text" id="ingredients" name="ingredients" placeholder="Ingredients" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <input type="text" id="instructions" name="instructions" placeholder="Instructions" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <input type="text" id="user-rating" name="user-rating" placeholder="Your rating from 1-10" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl">Post Recipe</button>
+      </form>
     </div>
-
   </div>  
-  
  
   <!-- Put the Firebase config here -->
   <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -54,7 +56,7 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
   </script>
-  <script src="index.js"></script>
+  <script src="newrecipe.html"></script>
 </body>
 
 </html>
