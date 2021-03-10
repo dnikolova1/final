@@ -13,13 +13,13 @@ firebase.auth().onAuthStateChanged(async function(user) {
     document.location.href = 'index.html'
     })
  
-    // // Render existing recipes
-    // let response = await fetch('/.netlify/functions/get_recipes')
-    // let recipes = await response.json()
-    // for (let i=0; i<recipes.length; i++) {
-    //   let recipe = recipes[i]
-    //   renderPost(recipe)
-    // }
+    // Render existing recipes
+    let response = await fetch('/.netlify/functions/get_recipes')
+    let recipes = await response.json()
+    for (let i=0; i<recipes.length; i++) {
+      let recipe = recipes[i]
+      renderPost(recipe)
+    }
 
     // Listen for the form submit and create the new post in the database
     document.querySelector('form').addEventListener('submit', async function(event) {
@@ -48,9 +48,9 @@ firebase.auth().onAuthStateChanged(async function(user) {
           userRating: postUserRating            
         })
       })
-      let post = await response.json()
-      console.log(post)
-      // renderPost(post)
+      let newPost = await response.json()
+      console.log(newPost)
+      renderPost(newPost)
     })
 
   } else {
@@ -75,3 +75,136 @@ firebase.auth().onAuthStateChanged(async function(user) {
     ui.start('.sign-in-or-sign-out', authUIConfig)
   }
 })
+
+async function renderPost(post) {
+  let postId = post.id
+  document.querySelector('.recipes').insertAdjacentHTML('beforeend', `
+    <div class="post-${postId} md:mt-16 mt-8 space-y-8">
+
+      <div class="flex">
+        <div class="md:mx-0 mx-4 w-2/3">
+          <span class="font-bold text-xl">${post.recipename}</span>
+          <a href="${post.recipeUrl}" class="text-blue-400">Link</a>
+        </div>  
+      
+        <div class="md:mx-0 mx-4 w-1/3">
+          <span class="text-xl">${post.username}</span>
+        </div>
+      </div>
+        
+      <div>
+        <img src="${post.imageUrl}" class="w-full">
+      </div>
+      
+      <div class="flex">
+        <div class="text-3xl md:mx-0 mx-4 w-2/3">
+          <button class="like-button text-base bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl">^Upvote</button>
+          <span class="likes text-base">${post.likes}</span>
+        </div>
+        <div class="text-3xl md:mx-0 mx-4 w-1/2">
+          <span class="text-base">User Rating: </span>
+          <span class="rating text-base bg-blue-300 text-white px-4 py-2 rounded-xl">${post.userRating}</span>
+        </div>
+      </div>
+
+      <div class="md:mx-0 mx-4">
+        <span class="font-bold">Ingredients</span><br/>
+        <span class="text-base">${post.ingredients}</span>
+      </div>
+
+      <div class="md:mx-0 mx-4">
+        <span class="font-bold">Instructions</span><br/>
+        <span class="text-base">${post.instructions}</span>
+      </div>
+
+      <div class="comments text-sm md:mx-0 mx-4 space-y-2">
+        ${renderComments(post.comments)}
+      </div>
+  
+      <div class="w-full md:mx-0 mx-4">
+        ${renderCommentForm()}
+      </div>
+    </div>
+  `)
+
+  // listen for the like button on this post
+  let likeButton = document.querySelector(`.post-${postId} .like-button`)
+  likeButton.addEventListener('click', async function(event) {
+    event.preventDefault()
+    console.log(`post ${postId} like button clicked!`)
+    let currentUserId = firebase.auth().currentUser.uid
+
+    let response = await fetch('/.netlify/functions/like', {
+      method: 'POST',
+      body: JSON.stringify({
+        postId: postId,
+        userId: currentUserId
+      })
+    })
+    if (response.ok) {
+      let existingNumberOfLikes = document.querySelector(`.post-${postId} .likes`).innerHTML
+      let newNumberOfLikes = parseInt(existingNumberOfLikes) + 1
+      document.querySelector(`.post-${postId} .likes`).innerHTML = newNumberOfLikes
+    }
+  })
+
+  // listen for the post comment button on this post
+  let postCommentButton = document.querySelector(`.post-${postId} .post-comment-button`)
+  postCommentButton.addEventListener('click', async function(event) {
+    event.preventDefault()
+    console.log(`post ${postId} post comment button clicked!`)
+
+    // get the text of the comment
+    let postCommentInput = document.querySelector(`.post-${postId} input`)
+    let newCommentText = postCommentInput.value
+    console.log(`comment: ${newCommentText}`)
+
+    // create a new Object to hold the comment's data
+    let newComment = {
+      postId: postId,
+      username: firebase.auth().currentUser.displayName,
+      text: newCommentText
+    }
+
+    // call our back-end lambda using the new comment's data
+    await fetch('/.netlify/functions/create_comment', {
+      method: 'POST',
+      body: JSON.stringify(newComment)
+    })
+
+    // insert the new comment into the DOM, in the div with the class name "comments", for this post
+    let commentsElement = document.querySelector(`.post-${postId} .comments`)
+    commentsElement.insertAdjacentHTML('beforeend', renderComment(newComment))
+
+    // clears the comment input
+    postCommentInput.value = ''
+  })
+}
+
+// given an Array of comment Objects, loop and return the HTML for the comments
+function renderComments(comments) {
+  if (comments) {
+    let markup = ''
+    for (let i = 0; i < comments.length; i++) {
+      markup += renderComment(comments[i])
+    }
+    return markup
+  } else {
+    return ''
+  }
+}
+
+// return the HTML for one comment, given a single comment Object
+function renderComment(comment) {
+  return `<div><strong>${comment.username}</strong> ${comment.text}</div>`
+}
+
+// return the HTML for the new comment form
+function renderCommentForm() {
+  let commentForm = ''
+  commentForm = `
+    <input type="text" class="mr-2 rounded-lg border px-3 py-2 focus:outline-none focus:ring-purple-500 focus:border-purple-500" placeholder="Add a comment...">
+    <button class="post-comment-button py-2 px-4 rounded-md shadow-sm font-medium text-white bg-purple-600 focus:outline-none">Post</button>
+  `
+  return commentForm
+}

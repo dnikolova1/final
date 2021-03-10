@@ -15,10 +15,10 @@ exports.handler = async function(event) {
     let recipeId = recipes[i].id                                // the ID for the given post
     let recipeData = recipes[i].data()                          // the rest of the post data
     let likesQuery = await db.collection('likes')           // likes from Firestore
-                             .where('postId', '==', postId) // for the given postId
+                             .where('recipeId', '==', recipeId) // for the given postId
                              .get()
     let commentsQuery = await db.collection('comments')     // likes from Firestore
-                             .where('postId', '==', postId) // for the given postId
+                             .where('recipeId', '==', recipeId) // for the given postId
                              .get()
     let commentsData = []                                   // an empty Array
     let comments = commentsQuery.docs                       // the comments documents
@@ -34,18 +34,18 @@ exports.handler = async function(event) {
 
     // add a new Object of our own creation to the postsData Array
     recipesData.push({
-      id: postId,                                           // the post ID
-      imageUrl: postData.imageUrl,                          // the image URL
-      username: postData.username,                          // the username
+      id: recipeId,                                           // the post ID
+      imageUrl: recipeData.imageUrl,                          // the image URL
+      username: recipeData.username,                          // the username
       likes: likesQuery.size,                               // number of likes
       comments: commentsData,                                // an Array of comments
-      userId: postData.userId,
-      recipename: postData.recipename,
-      recipeUrl: postData.recipeUrl,
-      imageUrl: postData.imageUrl, 
-      ingredients: postData.ingredients,
-      instructions: postData.instructions,
-      userRating: postData.userRating
+      userId: recipeData.userId,
+      recipename: recipeData.recipename,
+      recipeUrl: recipeData.recipeUrl,
+      imageUrl: recipeData.imageUrl, 
+      ingredients: recipeData.ingredients,
+      instructions: recipeData.instructions,
+      userRating: recipeData.userRating
     })
   }
   
