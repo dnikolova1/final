@@ -21,13 +21,24 @@
       <div class="ml-auto text-sm sign-in-or-sign-out"></div>
     </div>
 
-    <div class="recipes">
-      <!-- Recepies rendered from JavaScript -->
+    <!-- New recipe form -->
+    <div>
+      <form class="w-full mt-8" action="index.html">
+        <div class="text-2xl font-bold">Post new Recipe</div>
+        <input type="text" id="recipe-name" name="recipe-name" placeholder="Recipe Name" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <input type="text" id="recipe-url" name="recipe-url" placeholder="Recipe URL" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <input type="text" id="image-url" name="image-url" placeholder="Image URL" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <input type="text" id="ingredients" name="ingredients" placeholder="Ingredients" class="my-2 p-2 w-64 h-32 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <input type="text" id="instructions" name="instructions" placeholder="Instructions" class="my-2 p-2 w-64 h-32 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <input type="text" id="user-rating" name="user-rating" placeholder="Your rating from 1-10" class="my-2 p-2 w-64 border border-gray-400 rounded shadow-xl focus:outline-none focus:ring-purple-500 focus:border-purple-500">
+        <div>
+          <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl">Post Recipe</button>
+        </div>
+      </form>
     </div>
 
-    <!-- New recipe button -->    
-    <div>
-      <a href="newrecipe.html" class="ml-auto bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl">New Recipe</a>
+    <div class="recipes">
+      <!-- Recepies rendered from JavaScript -->
     </div>
 
   </div>  

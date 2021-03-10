@@ -21,10 +21,39 @@ firebase.auth().onAuthStateChanged(async function(user) {
       renderPost(recipe)
     }
 
+    // Listen for the form submit and create the new post in the database
+    document.querySelector('form').addEventListener('submit', async function(event) {
+      event.preventDefault()
+      let postUsername = user.displayName
+      let postRecipeName = document.querySelector('#recipe-name').value
+      let postRecipeUrl = document.querySelector('#recipe-url').value
+      let postImageUrl = document.querySelector('#image-url').value
+      let postIngredients = document.querySelector('#ingredients').value
+      let postInstructions = document.querySelector('#instructions').value
+      let postUserRating = document.querySelector('#user-rating').value
+      let response = await fetch('/.netlify/functions/create_recipe', {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: user.uid,
+          username: postUsername,
+          recipename: postRecipeName,
+          recipeUrl: postRecipeUrl,
+          imageUrl: postImageUrl,
+          ingredients: postIngredients,
+          instructions: postInstructions,
+          userRating: postUserRating            
+        })
+      })
+      let post = await response.json()
+      console.log(post)
+    })
 
   } else {
     // Signed out
     console.log('signed out')
+
+    // Hide the form when signed-out
+    document.querySelector('form').classList.add('hidden')
 
     // Initializes FirebaseUI Auth
     let ui = new firebaseui.auth.AuthUI(firebase.auth())
