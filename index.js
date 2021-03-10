@@ -13,13 +13,13 @@ firebase.auth().onAuthStateChanged(async function(user) {
     document.location.href = 'index.html'
     })
  
-    // Render existing recipes
-    let response = await fetch('/.netlify/functions/get_recipes')
-    let recipes = await response.json()
-    for (let i=0; i<recipes.length; i++) {
-      let recipe = recipes[i]
-      renderPost(recipe)
-    }
+    // // Render existing recipes
+    // let response = await fetch('/.netlify/functions/get_recipes')
+    // let recipes = await response.json()
+    // for (let i=0; i<recipes.length; i++) {
+    //   let recipe = recipes[i]
+    //   renderPost(recipe)
+    // }
 
     // Listen for the form submit and create the new post in the database
     document.querySelector('form').addEventListener('submit', async function(event) {
@@ -31,6 +31,10 @@ firebase.auth().onAuthStateChanged(async function(user) {
       let postIngredients = document.querySelector('#ingredients').value
       let postInstructions = document.querySelector('#instructions').value
       let postUserRating = document.querySelector('#user-rating').value
+      // console.log(postUsername)
+      // console.log(postRecipeName)
+      // console.log(postRecipeUrl)
+      
       let response = await fetch('/.netlify/functions/create_recipe', {
         method: 'POST',
         body: JSON.stringify({
@@ -46,6 +50,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
       })
       let post = await response.json()
       console.log(post)
+      // renderPost(post)
     })
 
   } else {
