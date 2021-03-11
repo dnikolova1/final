@@ -39,6 +39,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
         method: 'POST',
         body: JSON.stringify({
           userId: user.uid,
+          RecipeId: docRef.id, // adding recipeId 
           username: postUsername,
           recipename: postRecipeName,
           recipeUrl: postRecipeUrl,
@@ -98,8 +99,8 @@ async function renderPost(post) {
       
       <div class="flex">
         <div class="text-3xl md:mx-0 mx-4 w-2/3">
-          <button class="like-button text-base bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl">^Upvote</button>
-          <span class="likes text-base">${post.likes}</span>
+          <button class="upvotes-button text-base bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl">👍 Upvote</button>
+          <span class="upvotes text-base">${post.upvote}</span>
         </div>
         <div class="text-3xl md:mx-0 mx-4 w-1/2">
           <span class="text-base">User Rating: </span>
@@ -128,8 +129,8 @@ async function renderPost(post) {
   `)
 
   // listen for the like button on this post
-  let likeButton = document.querySelector(`.post-${postId} .like-button`)
-  likeButton.addEventListener('click', async function(event) {
+  let upvotesButton = document.querySelector(`.post-${postId} .upvotes-button`)
+  upvotesButton.addEventListener('click', async function(event) {
     event.preventDefault()
     console.log(`post ${postId} like button clicked!`)
     let currentUserId = firebase.auth().currentUser.uid
@@ -137,14 +138,14 @@ async function renderPost(post) {
     let response = await fetch('/.netlify/functions/upvote', {
       method: 'POST',
       body: JSON.stringify({
-        recipeId: postId,
+        postId: postId,
         userId: currentUserId
       })
     })
     if (response.ok) {
-      let existingNumberOfLikes = document.querySelector(`.post-${postId} .likes`).innerHTML
-      let newNumberOfLikes = parseInt(existingNumberOfLikes) + 1
-      document.querySelector(`.post-${postId} .likes`).innerHTML = newNumberOfLikes
+      let existingNumberOfUpvotes = document.querySelector(`.post-${postId} .upvotes`).innerHTML
+      let newNumberOfUpvotes = parseInt(existingNumberOfUpvotes) + 1
+      document.querySelector(`.post-${postId} .upvotes`).innerHTML = newNumberOfUpvotes
     }
   })
 

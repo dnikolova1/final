@@ -25,13 +25,13 @@ exports.handler = async function(event) {
     ingredients: ingredients,
     instructions: instructions,
     userRating: userRating,
+    upvotes: 0, 
+    type: Rated,
     created: firebase.firestore.FieldValue.serverTimestamp()
   }
 
   let docRef = await db.collection('recipes').add(newRecipe)
   newRecipe.id = docRef.id
-  newRecipe.upvotes = 0
-  newRecipe.type = 'Rated'
 
   return {
     statusCode: 200,
