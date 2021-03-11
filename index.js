@@ -134,10 +134,10 @@ async function renderPost(post) {
     console.log(`post ${postId} like button clicked!`)
     let currentUserId = firebase.auth().currentUser.uid
 
-    let response = await fetch('/.netlify/functions/like', {
+    let response = await fetch('/.netlify/functions/upvote', {
       method: 'POST',
       body: JSON.stringify({
-        postId: postId,
+        recipeId: postId,
         userId: currentUserId
       })
     })

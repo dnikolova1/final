@@ -7,7 +7,7 @@ exports.handler = async function(event) {
   let recipeId = body.recipeId
   let userId = body.userId
   
-  console.log(`post: ${postId}`)
+  console.log(`recipe: ${recipeId}`)
   console.log(`user: ${userId}`)
 
   let querySnapshot = await db.collection('upvotes')
