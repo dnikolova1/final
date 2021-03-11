@@ -109,6 +109,10 @@ async function renderPost(post) {
       </div>
 
       <div class="md:mx-0 mx-4">
+        <span class="full-recipe-button font-bold text-pink-500"> Full Recipe </span><br/>
+      </div>
+
+      <div class="md:mx-0 mx-4">
         <span class="font-bold">Ingredients</span><br/>
         <span class="text-base">${post.ingredients}</span>
       </div>
@@ -180,6 +184,18 @@ async function renderPost(post) {
     // clears the comment input
     postCommentInput.value = ''
   })
+  
+  // accessing "full recipe" page 
+  // listen for click on full recipe
+  let fullrecipeButton = document.querySelector(`.post-${postId} .full-recipe-button`)
+  fullrecipeButton.addEventListener('click', async function(event) {
+    event.preventDefault()
+    console.log(`post ${postId} post full recipe button clicked!`)
+    // hiding form and other recipes
+    document.querySelector('.recipes').innerHTML = ""
+    document.querySelector('.form').innerHTML = ""
+})
+
 }
 
 // given an Array of comment Objects, loop and return the HTML for the comments
