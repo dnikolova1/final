@@ -39,7 +39,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
         method: 'POST',
         body: JSON.stringify({
           userId: user.uid,
-          RecipeId: docRef.id, // adding recipeId 
+          //RecipeId: docRef.id, // adding recipeId 
           username: postUsername,
           recipename: postRecipeName,
           recipeUrl: postRecipeUrl,

@@ -26,7 +26,7 @@ exports.handler = async function(event) {
     instructions: instructions,
     userRating: userRating,
     upvotes: 0, 
-    type: Rated,
+    type: "Rated",
     created: firebase.firestore.FieldValue.serverTimestamp()
   }
 
