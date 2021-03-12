@@ -194,6 +194,80 @@ async function renderPost(post) {
     // hiding form and other recipes
     document.querySelector('.recipes').innerHTML = ""
     document.querySelector('.form').innerHTML = ""
+  
+    // render recipe - need to figure this out 
+    async function renderRecipe(post) {
+      document.querySelector('.recipes').insertAdjacentHTML('beforeend', `
+        <div class="post-${postId} md:mt-16 mt-8 space-y-8">
+    
+          <div class="flex">
+            <div class="md:mx-0 mx-4 w-2/3">
+              <span class="font-bold text-xl">${post.recipename}</span>
+              <a href="${post.recipeUrl}" class="text-blue-400">Link</a>
+            </div>  
+          
+            <div class="md:mx-0 mx-4 w-1/3">
+              <span class="text-xl">${post.username}</span>
+            </div>
+          </div>
+            
+          <div>
+            <img src="${post.imageUrl}" class="w-full">
+          </div>
+          
+          <div class="flex">
+            <div class="text-3xl md:mx-0 mx-4 w-2/3">
+              <button class="upvotes-button text-base bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl">👍 Upvote</button>
+              <span class="upvotes text-base">${post.upvote}</span>
+            </div>
+            <div class="text-3xl md:mx-0 mx-4 w-1/2">
+              <span class="text-base">User Rating: </span>
+              <span class="rating text-base bg-blue-300 text-white px-4 py-2 rounded-xl">${post.userRating}</span>
+            </div>
+          </div>
+    
+          <div class="md:mx-0 mx-4">
+            <span class="full-recipe-button font-bold text-pink-500"> Full Recipe </span><br/>
+          </div>
+    
+          <div class="md:mx-0 mx-4">
+            <span class="font-bold">Ingredients</span><br/>
+            <span class="text-base">${post.ingredients}</span>
+          </div>
+    
+          <div class="md:mx-0 mx-4">
+            <span class="font-bold">Instructions</span><br/>
+            <span class="text-base">${post.instructions}</span>
+          </div>
+    
+          <div class="comments text-sm md:mx-0 mx-4 space-y-2">
+            ${renderComments(post.comments)}
+          </div>
+      
+          <div class="w-full md:mx-0 mx-4">
+            ${renderCommentForm()}
+          </div>
+        </div>
+      `)}
+      // fetch recipe from firebase - need to add functionality that ensures recipe ID matches recipe ID above
+      let response = await fetch('/.netlify/functions/get_recipes', {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: user.uid,
+          RecipeId: docRef.id, // adding recipeId 
+          username: postUsername,
+          recipename: postRecipeName,
+          recipeUrl: postRecipeUrl,
+          imageUrl: postImageUrl,
+          ingredients: postIngredients,
+          instructions: postInstructions,
+          userRating: postUserRating            
+        })
+      })
+
+      let RecipePost = await response.json()
+      console.log(RecipePost)
+      renderRecipe(RecipePost)
 })
 
 }
