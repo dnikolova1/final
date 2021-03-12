@@ -30,6 +30,24 @@ firebase.auth().onAuthStateChanged(async function(user) {
         renderPost(recipe)
       }
     })
+
+    // See my recipes when "My Recipes" button is clicked
+    let myRecipes = document.querySelector('#my-recipes-filter')
+    myRecipes.addEventListener('click', async function(event){
+      event.preventDefault()
+      console.log('My Recipes button was clicked')
+      // Hides add a recipe form
+      document.querySelector('form').classList.add('hidden')
+      document.querySelector('.recipes').innerHTML = ''
+
+      // Render existing recipes
+      let response = await fetch('/.netlify/functions/get_recipes')
+      let recipes = await response.json()
+      for (let i=0; i<recipes.length; i++) {
+        let recipe = recipes[i]
+        renderPost(recipe)
+      }
+    })
   
     
     // Go to add a recipe page when "Add a Recipe" button is clicked
@@ -83,7 +101,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
 
     // Hide the form when signed-out
     document.querySelector('form').classList.add('hidden')
-
+    
     // Initializes FirebaseUI Auth
     let ui = new firebaseui.auth.AuthUI(firebase.auth())
 
