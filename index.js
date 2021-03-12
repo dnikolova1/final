@@ -38,7 +38,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
       event.preventDefault()
       console.log('Add a Recipe button was clicked')
       // Shows the add a recipe form
-      document.querySelector('form').classList.add()
+      document.querySelector('form').classList.remove('hidden')
       document.querySelector('.recipes').innerHTML = ''
 
     
@@ -75,6 +75,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
         renderPost(newPost)
       })
     })
+  
     
   } else {
     // Signed out
