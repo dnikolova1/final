@@ -297,21 +297,20 @@ async function renderPost(post) {
         </div>
       `)}
       // fetch recipe from firebase - need to add functionality that ensures recipe ID matches recipe ID above
-      let response = await fetch(`/.netlify/functions/get_single_recipe?${postId}`)
-      // {
-      //   method: 'POST',
-      //   body: JSON.stringify({
-      //     userId: user.uid,
-      //     RecipeId: docRef.id, // adding recipeId 
-      //     username: postUsername,
-      //     recipename: postRecipeName,
-      //     recipeUrl: postRecipeUrl,
-      //     imageUrl: postImageUrl,
-      //     ingredients: postIngredients,
-      //     instructions: postInstructions,
-      //     userRating: postUserRating            
-      //   })
-      // })
+      let response = await fetch(`/.netlify/functions/get_single_recipe?${postId}`, {
+        method: 'POST',
+        body: JSON.stringify({
+          userId: user.uid,
+          RecipeId: docRef.id, // adding recipeId 
+          username: postUsername,
+          recipename: postRecipeName,
+          recipeUrl: postRecipeUrl,
+          imageUrl: postImageUrl,
+          ingredients: postIngredients,
+          instructions: postInstructions,
+          userRating: postUserRating            
+        })
+      })
 
       let RecipePost = await response.json()
       console.log(RecipePost)
