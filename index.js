@@ -155,7 +155,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
 async function renderPost(post) {
   let postId = post.id
   document.querySelector('.recipes').insertAdjacentHTML('beforeend', `
-    <div class="post-${postId} md:mt-16 mt-8 space-y-8">
+    <div class="post-${postId} md:mt-16 mt-8 space-y-8 border-2 rounded p-3">
 
       <div class="flex">
         <div class="md:mx-0 mx-4 w-2/3">
@@ -187,17 +187,18 @@ async function renderPost(post) {
         <span class="full-recipe-button font-bold text-pink-500"> Full Recipe </span><br/>
       </div>
 
-      <div class="md:mx-0 mx-4">
+      <div class="md:mx-0 mx-4 border rounded p-2">
         <span class="font-bold">Ingredients</span><br/>
         <span class="text-base">${post.ingredients}</span>
       </div>
 
-      <div class="md:mx-0 mx-4">
+      <div class="md:mx-0 mx-4 border rounded p-2">
         <span class="font-bold">Instructions</span><br/>
         <span class="text-base">${post.instructions}</span>
       </div>
 
-      <div class="comments text-sm md:mx-0 mx-4 space-y-2">
+      <div class="comments text-sm md:mx-0 mx-4 space-y-2 border rounded p-2">
+        <span class="font-bold">Comments:</span><br/>
         ${renderComments(post.comments)}
       </div>
   
