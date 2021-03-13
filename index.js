@@ -13,54 +13,95 @@ firebase.auth().onAuthStateChanged(async function(user) {
     document.location.href = 'index.html'
     })
  
-    // Render existing recipes
-    let response = await fetch('/.netlify/functions/get_recipes')
-    let recipes = await response.json()
-    for (let i=0; i<recipes.length; i++) {
-      let recipe = recipes[i]
-      renderPost(recipe)
-    }
-
-    // Listen for the form submit and create the new post in the database
-    document.querySelector('form').addEventListener('submit', async function(event) {
+    // See all recipes when "See All Recipes" button is clicked
+    let seeAllRecipes = document.querySelector('#see-all-recipes-filter')
+    seeAllRecipes.addEventListener('click', async function(event){
       event.preventDefault()
-      let postUsername = user.displayName
-      let postRecipeName = document.querySelector('#recipe-name').value
-      let postRecipeUrl = document.querySelector('#recipe-url').value
-      let postImageUrl = document.querySelector('#image-url').value
-      let postIngredients = document.querySelector('#ingredients').value
-      let postInstructions = document.querySelector('#instructions').value
-      let postUserRating = document.querySelector('#user-rating').value
-      // console.log(postUsername)
-      // console.log(postRecipeName)
-      // console.log(postRecipeUrl)
-      
-      let response = await fetch('/.netlify/functions/create_recipe', {
-        method: 'POST',
-        body: JSON.stringify({
-          userId: user.uid,
-          //RecipeId: docRef.id, // adding recipeId 
-          username: postUsername,
-          recipename: postRecipeName,
-          recipeUrl: postRecipeUrl,
-          imageUrl: postImageUrl,
-          ingredients: postIngredients,
-          instructions: postInstructions,
-          userRating: postUserRating            
-        })
-      })
-      let newPost = await response.json()
-      console.log(newPost)
-      renderPost(newPost)
+      console.log('See All Recipes button was clicked')
+      // Hides add a recipe form
+      document.querySelector('form').classList.add('hidden')
+      document.querySelector('.recipes').innerHTML = ''
+
+      // Render existing recipes
+      let response = await fetch('/.netlify/functions/get_recipes')
+      let recipes = await response.json()
+      for (let i=0; i<recipes.length; i++) {
+        let recipe = recipes[i]
+        renderPost(recipe)
+      }
     })
 
+    // See my recipes when "My Recipes" button is clicked
+    let myRecipes = document.querySelector('#my-recipes-filter')
+    myRecipes.addEventListener('click', async function(event){
+      event.preventDefault()
+      console.log('My Recipes button was clicked')
+      // Hides add a recipe form
+      document.querySelector('form').classList.add('hidden')
+      document.querySelector('.recipes').innerHTML = ''
+
+      // Render existing recipes
+      let response = await fetch('/.netlify/functions/get_recipes')
+      let recipes = await response.json()
+      for (let i=0; i<recipes.length; i++) {
+        let recipe = recipes[i]
+        renderPost(recipe)
+      }
+    })
+  
+    
+    // Go to add a recipe page when "Add a Recipe" button is clicked
+    let addARecipe = document.querySelector('#add-a-recipe-filter')
+    addARecipe.addEventListener('click', async function(event){
+      event.preventDefault()
+      console.log('Add a Recipe button was clicked')
+      // Shows the add a recipe form
+      document.querySelector('form').classList.remove('hidden')
+      document.querySelector('.recipes').innerHTML = ''
+
+    
+      // Listen for the form submit and create the new post in the database
+      document.querySelector('form').addEventListener('submit', async function(event) {
+        event.preventDefault()
+        let postUsername = user.displayName
+        let postRecipeName = document.querySelector('#recipe-name').value
+        let postRecipeUrl = document.querySelector('#recipe-url').value
+        let postImageUrl = document.querySelector('#image-url').value
+        let postIngredients = document.querySelector('#ingredients').value
+        let postInstructions = document.querySelector('#instructions').value
+        let postUserRating = document.querySelector('#user-rating').value
+        // console.log(postUsername)
+        // console.log(postRecipeName)
+        // console.log(postRecipeUrl)
+        
+        let response = await fetch('/.netlify/functions/create_recipe', {
+          method: 'POST',
+          body: JSON.stringify({
+            userId: user.uid,
+            //RecipeId: docRef.id, // adding recipeId 
+            username: postUsername,
+            recipename: postRecipeName,
+            recipeUrl: postRecipeUrl,
+            imageUrl: postImageUrl,
+            ingredients: postIngredients,
+            instructions: postInstructions,
+            userRating: postUserRating            
+          })
+        })
+        let newPost = await response.json()
+        console.log(newPost)
+        renderPost(newPost)
+      })
+    })
+  
+    
   } else {
     // Signed out
     console.log('signed out')
 
     // Hide the form when signed-out
     document.querySelector('form').classList.add('hidden')
-
+    
     // Initializes FirebaseUI Auth
     let ui = new firebaseui.auth.AuthUI(firebase.auth())
 
