@@ -10,15 +10,15 @@ exports.handler = async function(event) {
   console.log(`recipe: ${postId}`)
   console.log(`user: ${userId}`)
 
-  let querySnapshot = await db.collection('upvotes')
+  let querySnapshot = await db.collection('likes')
                               .where('postId', '==', postId)
                               .where('userId', '==', userId)
                               .get()
   let numberOfUpvotes = querySnapshot.size
 
   if (numberOfUpvotes == 0) {
-    await db.collection('upvotes').add({
-      postId: recipeId,
+    await db.collection('likes').add({
+      postId: postId,
       userId: userId
     })
     return { statusCode: 200 }

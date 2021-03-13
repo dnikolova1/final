@@ -15,10 +15,10 @@ exports.handler = async function(event) {
     let recipeId = recipes[i].id                                // the ID for the given post
     let recipeData = recipes[i].data()                          // the rest of the post data
     let likesQuery = await db.collection('upvotes')           // likes from Firestore
-                             .where('recipeId', '==', recipeId) // for the given postId
+                             .where('postId', '==', recipeId) // for the given postId
                              .get()
     let commentsQuery = await db.collection('comments')     // likes from Firestore
-                             .where('recipeId', '==', recipeId) // for the given postId
+                             .where('postId', '==', recipeId) // for the given postId
                              .get()
     let commentsData = []                                   // an empty Array
     let comments = commentsQuery.docs                       // the comments documents
