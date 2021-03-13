@@ -3,6 +3,12 @@ firebase.auth().onAuthStateChanged(async function(user) {
     // Signed in
     console.log('signed in')
     
+  //   let db = firebase.firestore() // attempting to get "my recipes to match userId"
+  //   db.collection('users').doc(user.uid).set({ // attempting to get "my recipes to match userId"
+  //     name: user.displayName,
+  //     email: user.email
+  //  })
+
     // Sign-out button
     document.querySelector('.sign-in-or-sign-out').innerHTML = `
     <button class="text-pink-500 underline sign-out">Sign Out</button>
@@ -40,8 +46,8 @@ firebase.auth().onAuthStateChanged(async function(user) {
       document.querySelector('form').classList.add('hidden')
       document.querySelector('.recipes').innerHTML = ''
 
-      // Render existing recipes
-      let response = await fetch('/.netlify/functions/get_recipes')
+      // Render existing recipes under this username
+      let response = await fetch(`/.netlify/functions/get_my_recipes?userId=${user.uid}`)
       let recipes = await response.json()
       for (let i=0; i<recipes.length; i++) {
         let recipe = recipes[i]

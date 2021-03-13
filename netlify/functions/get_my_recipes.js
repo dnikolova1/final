@@ -2,11 +2,18 @@
 let firebase = require('./firebase')
 
 exports.handler = async function(event) {
+  
+  let queryStringUserId = event.queryStringParameters.userId
+  console.log(event)
+  console.log(event.queryStringParameters)
+  console.log(queryStringUserId)
+  console.log('hello from the back-end!')
+  
   let db = firebase.firestore()                             // define a variable so we can use Firestore
   let recipesData = []                                        // an empty Array
-  
-  let recipesQuery = await db.collection('recipes')             // posts from Firestore
-                           .orderBy('created')              // ordered by created
+
+  let recipesQuery = await db.collection('recipes') // posts from Firestore
+                           .where('userId', '==', queryStringUserId) // posts that match this user ID
                            .get()
   let recipes = recipesQuery.docs                               // the post documents themselves
   
