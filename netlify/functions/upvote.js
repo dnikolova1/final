@@ -4,14 +4,14 @@ let firebase = require('./firebase')
 exports.handler = async function(event) {
   let db = firebase.firestore()
   let body = JSON.parse(event.body)
-  let recipeId = body.recipeId
+  let postId = body.postId
   let userId = body.userId
   
-  console.log(`recipe: ${recipeId}`)
+  console.log(`recipe: ${postId}`)
   console.log(`user: ${userId}`)
 
   let querySnapshot = await db.collection('upvotes')
-                              .where('recipeId', '==', recipeId)
+                              .where('postId', '==', postId)
                               .where('userId', '==', userId)
                               .get()
   let numberOfUpvotes = querySnapshot.size
