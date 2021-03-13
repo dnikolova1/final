@@ -118,6 +118,9 @@ firebase.auth().onAuthStateChanged(async function(user) {
         })
         let newPost = await response.json()
         console.log(newPost)
+         // Hides add a recipe form
+        document.querySelector('form').classList.add('hidden')
+        document.querySelector('.recipes').innerHTML = ''
         renderPost(newPost)
       })
     })
