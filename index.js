@@ -11,7 +11,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
 
     // Sign-out button
     document.querySelector('.sign-in-or-sign-out').innerHTML = `
-    <button class="text-pink-500 underline sign-out">Sign Out</button>
+    <button class="text-pink-500 mx-4 underline sign-out">Sign Out</button>
     `
     // Menu (filters)
     document.querySelector('.menu').innerHTML = `
@@ -183,26 +183,28 @@ async function renderPost(post) {
         </div>
       </div>
 
-      <div class="md:mx-0 mx-4">
-        <span class="full-recipe-button font-bold text-pink-500"> Full Recipe </span><br/>
+      <div class="flex"> 
+        <div class="md:mx-0 mx-4 w-full">
+          <span class="full-recipe-button font-bold text-pink-500"> Full Recipe </span><br/>
+        </div>
       </div>
 
       <div class="md:mx-0 mx-4 border rounded p-2">
-        <span class="font-bold">Ingredients</span><br/>
-        <span class="text-base">${post.ingredients}</span>
+        <span class="md:flex font-bold">Ingredients</span><br/>
+        <span class="md:flex text-base">${post.ingredients}</span>
       </div>
 
       <div class="md:mx-0 mx-4 border rounded p-2">
-        <span class="font-bold">Instructions</span><br/>
-        <span class="text-base">${post.instructions}</span>
+        <span class="md:flex font-bold">Instructions</span><br/>
+        <span class="md:flex text-base">${post.instructions}</span>
       </div>
 
       <div class="comments text-sm md:mx-0 mx-4 space-y-2 border rounded p-2">
-        <span class="font-bold">Comments:</span><br/>
+        <span class="md:flex font-bold">Comments:</span><br/>
         ${renderComments(post.comments)}
       </div>
   
-      <div class="w-full md:mx-0 mx-4">
+      <div class="md:flex w-full md:mx-0 mx-4">
         ${renderCommentForm()}
       </div>
     </div>
@@ -286,11 +288,13 @@ async function renderPost(post) {
               <span class="text-xl">${post.username}</span>
             </div>
           </div>
-            
-          <div>
-            <img src="${post.imageUrl}" class="w-full">
-          </div>
           
+          <div class="flex">
+            <div>
+              <img src="${post.imageUrl}" class="w-full">
+            </div>
+          </div>
+
           <div class="flex">
             <div class="text-3xl md:mx-0 mx-4 w-2/3">
               <button class="upvotes-button text-base bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl">👍 Upvote</button>
@@ -301,27 +305,37 @@ async function renderPost(post) {
               <span class="rating text-base bg-blue-300 text-white px-4 py-2 rounded-xl">${post.userRating}</span>
             </div>
           </div>
-    
-          <div class="md:mx-0 mx-4">
-            <span class="full-recipe-button font-bold text-pink-500"> Full Recipe </span><br/>
+ 
+          <div class="flex">
+            <div class="md:mx-0 mx-4">
+              <span class="full-recipe-button font-bold text-pink-500"> Full Recipe </span><br/>
+            </div>
           </div>
+
+          <div class="flex">  
+            <div class="md:mx-0 mx-4">
+              <span class="font-bold">Ingredients</span><br/>
+              <span class="text-base">${post.ingredients}</span>
+            </div>
+          </div>  
     
-          <div class="md:mx-0 mx-4">
-            <span class="font-bold">Ingredients</span><br/>
-            <span class="text-base">${post.ingredients}</span>
+          <div class="flex">  
+            <div class="md:mx-0 mx-4">
+              <span class="font-bold">Instructions</span><br/>
+              <span class="text-base">${post.instructions}</span>
+            </div>
           </div>
-    
-          <div class="md:mx-0 mx-4">
-            <span class="font-bold">Instructions</span><br/>
-            <span class="text-base">${post.instructions}</span>
+
+          <div class="flex"> 
+            <div class="comments text-sm md:mx-0 mx-4 space-y-2">
+              ${renderComments(post.comments)}
+            </div>
           </div>
-    
-          <div class="comments text-sm md:mx-0 mx-4 space-y-2">
-            ${renderComments(post.comments)}
-          </div>
-      
-          <div class="w-full md:mx-0 mx-4">
-            ${renderCommentForm()}
+
+          <div class="flex"> 
+            <div class="w-full md:mx-0 mx-4">
+              ${renderCommentForm()}
+            </div>
           </div>
         </div>
       `)}
