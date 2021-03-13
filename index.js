@@ -20,7 +20,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
     <div class="filters md:flex justify-center space-x-2 md:space-y-0 space-y-2">
       <div class="text-center"><a href="#" id="see-all-recipes-filter" class="filter-button inline-block border-2 border-pink-500 text-black-500 rounded px-4 py-2">See All Recipes</a></div>
       <div class="text-center"><a href="#" id="my-recipes-filter" class="filter-button inline-block border-2 border-pink-500 text-black-500 rounded px-4 py-2">My Recipes</a></div>
-      <div class="text-center"><a href="#" id="add-a-recipe-filter" class="filter-button inline-block border-2 border-pink-500 text-black-500 rounded px-4 py-2">Add a Recipe</a></div>
+      <div class="text-center"><a href="#" id="add-a-recipe-filter" class="filter-button inline-block border-2 border-pink-500 bg-pink-500 text-white rounded px-4 py-2">+ Add a Recipe</a></div>
     </div>
     `
     document.querySelector('.sign-out').addEventListener('click', function(event) {
