@@ -228,7 +228,7 @@ async function renderPost(post) {
     }
   })
 
-  // listen for the post comment button on this post
+  // listen for the post comment button on this post 
   let postCommentButton = document.querySelector(`.post-${postId} .post-comment-button`)
   postCommentButton.addEventListener('click', async function(event) {
     event.preventDefault()

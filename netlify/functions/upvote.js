@@ -1,4 +1,4 @@
-// /.netlify/functions/like
+// /.netlify/functions/like 
 let firebase = require('./firebase')
 
 exports.handler = async function(event) {

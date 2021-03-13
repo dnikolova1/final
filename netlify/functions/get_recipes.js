@@ -5,7 +5,7 @@ exports.handler = async function(event) {
   let db = firebase.firestore()                             // define a variable so we can use Firestore
   let recipesData = []                                        // an empty Array
   
-  let recipesQuery = await db.collection('recipes')             // posts from Firestore
+  let recipesQuery = await db.collection('recipes')             // posts from Firestore 
                            .orderBy('created')              // ordered by created
                            .get()
   let recipes = recipesQuery.docs                               // the post documents themselves

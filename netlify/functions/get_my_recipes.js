@@ -39,7 +39,7 @@ exports.handler = async function(event) {
       })
     }
 
-    // add a new Object of our own creation to the postsData Array
+    // add a new Object of our own creation to the postsData Array 
     recipesData.push({
       id: recipeId,                                           // the post ID
       imageUrl: recipeData.imageUrl,                          // the image URL
