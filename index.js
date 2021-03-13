@@ -175,7 +175,7 @@ async function renderPost(post) {
       <div class="flex">
         <div class="text-3xl md:mx-0 mx-4 w-2/3">
           <button class="upvotes-button text-base bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl">👍 Upvote</button>
-          <span class="upvotes text-base">${post.upvote}</span>
+          <span class="upvotes text-base">${post.likes}</span>
         </div>
         <div class="text-3xl md:mx-0 mx-4 w-1/2">
           <span class="text-base">User Rating: </span>
@@ -293,7 +293,7 @@ async function renderPost(post) {
           <div class="flex">
             <div class="text-3xl md:mx-0 mx-4 w-2/3">
               <button class="upvotes-button text-base bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl">👍 Upvote</button>
-              <span class="upvotes text-base">${post.upvote}</span>
+              <span class="upvotes text-base">${post.likes}</span>
             </div>
             <div class="text-3xl md:mx-0 mx-4 w-1/2">
               <span class="text-base">User Rating: </span>
