@@ -118,6 +118,9 @@ firebase.auth().onAuthStateChanged(async function(user) {
     // Hide the form when signed-out
     document.querySelector('form').classList.add('hidden')
     
+    // Hide the menu when signed-out
+    document.querySelector('menu').classList.add('hidden')
+
     // Initializes FirebaseUI Auth
     let ui = new firebaseui.auth.AuthUI(firebase.auth())
 
