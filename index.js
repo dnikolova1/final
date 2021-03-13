@@ -15,7 +15,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
     `
     // Menu (filters)
     document.querySelector('.menu').innerHTML = `
-    <!-- Filters for different tabs -->    
+    <!-- Filters for different tabs -->
     <div class="text-center text-xl text-black-500 px-4 md:py-2">Menu</div>
     <div class="filters md:flex justify-center space-x-2 md:space-y-0 space-y-2">
       <div class="text-center"><a href="#" id="see-all-recipes-filter" class="filter-button inline-block border-2 border-pink-500 text-black-500 rounded px-4 py-2">See All Recipes</a></div>
