@@ -29,6 +29,18 @@ firebase.auth().onAuthStateChanged(async function(user) {
     document.location.href = 'index.html'
     })
  
+
+    // Show all recipes by defult, hide new recipe form
+    document.querySelector('.form').classList.add('hidden')
+    // Render existing recipes
+    let response = await fetch('/.netlify/functions/get_recipes')
+    let recipes = await response.json()
+    for (let i=0; i<recipes.length; i++) {
+      let recipe = recipes[i]
+      renderPost(recipe)
+    }
+
+
     // See all recipes when "See All Recipes" button is clicked
     let seeAllRecipes = document.querySelector('#see-all-recipes-filter')
     seeAllRecipes.addEventListener('click', async function(event){
