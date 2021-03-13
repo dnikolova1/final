@@ -207,7 +207,7 @@ async function renderPost(post) {
     </div>
   `)
 
-  // listen for the like button on this post
+  // listen for the like button on this post 
   let upvotesButton = document.querySelector(`.post-${postId} .upvotes-button`)
   upvotesButton.addEventListener('click', async function(event) {
     event.preventDefault()
