@@ -341,7 +341,6 @@ async function renderPost(post) {
       `)}
       // fetch recipe from firebase - need to add functionality that ensures recipe ID matches recipe ID above
       let response = await fetch(`/.netlify/functions/get_single_recipe?recipeId=${postId}`)
-      ///.netlify/functions/get_my_recipes?userId=${}
         // method: 'POST',
         // body: JSON.stringify({
         //   userId: user.uid,
@@ -355,10 +354,12 @@ async function renderPost(post) {
         //   userRating: postUserRating            
         // })
       
-
       let RecipePost = await response.json()
-      console.log(RecipePost)
-      renderRecipe(RecipePost)
+      for (let i=0; i<RecipePost.length; i++) {
+        let recipe = RecipePost[i]
+        console.log(RecipePost)
+        renderRecipe(RecipePost[0])
+      }
 })
 
 }
