@@ -2,12 +2,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
   if (user) {
     // Signed in
     console.log('signed in')
-    
-  //   let db = firebase.firestore() // attempting to get "my recipes to match userId"
-  //   db.collection('users').doc(user.uid).set({ // attempting to get "my recipes to match userId"
-  //     name: user.displayName,
-  //     email: user.email
-  //  })
+
 
     // Sign-out button
     document.querySelector('.sign-in-or-sign-out').innerHTML = `
@@ -16,11 +11,11 @@ firebase.auth().onAuthStateChanged(async function(user) {
     // Menu (filters)
     document.querySelector('.menu').innerHTML = `
     <!-- Filters for different tabs -->
-    <div class="text-center text-xl text-black-500 px-4 md:py-2">Menu</div>
+    <body class="p-6">
     <div class="filters md:flex justify-center space-x-2 md:space-y-0 space-y-2">
       <div class="text-center"><a href="#" id="see-all-recipes-filter" class="filter-button inline-block border-2 border-pink-500 text-black-500 rounded px-4 py-2">See All Recipes</a></div>
       <div class="text-center"><a href="#" id="my-recipes-filter" class="filter-button inline-block border-2 border-pink-500 text-black-500 rounded px-4 py-2">My Recipes</a></div>
-      <div class="text-center"><a href="#" id="add-a-recipe-filter" class="filter-button inline-block border-2 border-pink-500 bg-pink-500 text-white rounded px-4 py-2">+ Add a Recipe</a></div>
+      <div class="text-center"><a href="#" id="add-a-recipe-filter" class="filter-button inline-block border-2 border-pink-500 bg-pink-500 text-white rounded px-4 py-2">Add a Recipe</a></div>
     </div>
     `
     document.querySelector('.sign-out').addEventListener('click', function(event) {
@@ -155,7 +150,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
 async function renderPost(post) {
   let postId = post.id
   document.querySelector('.recipes').insertAdjacentHTML('beforeend', `
-    <div class="post-${postId} md:mt-16 mt-8 space-y-8 border-2 rounded p-3">
+    <div class="post-${postId} md: mt-16 mt-8 space-y-8 border-2 rounded p-3">
 
       <div class="flex">
         <div class="md:mx-0 mx-4 w-2/3">
