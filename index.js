@@ -189,16 +189,6 @@ async function renderPost(post) {
         </div>
       </div>
 
-      <div class="md:mx-0 mx-4 border rounded p-2">
-        <span class="md:flex font-bold">Ingredients</span><br/>
-        <span class="md:flex text-base">${post.ingredients}</span>
-      </div>
-
-      <div class="md:mx-0 mx-4 border rounded p-2">
-        <span class="md:flex font-bold">Instructions</span><br/>
-        <span class="md:flex text-base">${post.instructions}</span>
-      </div>
-
       <div class="comments text-sm md:mx-0 mx-4 space-y-2 border rounded p-2">
         <span class="md:flex font-bold">Comments:</span><br/>
         ${renderComments(post.comments)}
@@ -273,7 +263,7 @@ async function renderPost(post) {
     document.querySelector('.recipes').innerHTML = ""
     document.querySelector('.form').innerHTML = ""
   
-    // render recipe - need to figure this out 
+    // render recipe 
     async function renderRecipe(post) {
       document.querySelector('.recipes').insertAdjacentHTML('beforeend', `
         <div class="post-${postId} md:mt-16 mt-8 space-y-8">
@@ -303,12 +293,6 @@ async function renderPost(post) {
             <div class="text-3xl md:mx-0 mx-4 w-1/2">
               <span class="text-base">User Rating: </span>
               <span class="rating text-base bg-blue-300 text-white px-4 py-2 rounded-xl">${post.userRating}</span>
-            </div>
-          </div>
- 
-          <div class="flex">
-            <div class="md:mx-0 mx-4">
-              <span class="full-recipe-button font-bold text-pink-500"> Full Recipe </span><br/>
             </div>
           </div>
 
