@@ -32,13 +32,13 @@ firebase.auth().onAuthStateChanged(async function(user) {
 
     // Show all recipes by defult, hide new recipe form
     document.querySelector('.form').classList.add('hidden')
-    // Render existing recipes
-    let response = await fetch('/.netlify/functions/get_recipes')
-    let recipes = await response.json()
-    for (let i=0; i<recipes.length; i++) {
-      let recipe = recipes[i]
-      renderPost(recipe)
-    }
+    // Render existing recipes 
+      let response = await fetch('/.netlify/functions/get_recipes')
+      let recipes = await response.json()
+      for (let i=0; i<recipes.length; i++) {
+        let recipe = recipes[i]
+        renderPost(recipe)
+      }
 
 
     // See all recipes when "See All Recipes" button is clicked
@@ -340,20 +340,21 @@ async function renderPost(post) {
         </div>
       `)}
       // fetch recipe from firebase - need to add functionality that ensures recipe ID matches recipe ID above
-      let response = await fetch(`/.netlify/functions/get_single_recipe?${postId}`, {
-        method: 'POST',
-        body: JSON.stringify({
-          userId: user.uid,
-          RecipeId: docRef.id, // adding recipeId 
-          username: postUsername,
-          recipename: postRecipeName,
-          recipeUrl: postRecipeUrl,
-          imageUrl: postImageUrl,
-          ingredients: postIngredients,
-          instructions: postInstructions,
-          userRating: postUserRating            
-        })
-      })
+      let response = await fetch(`/.netlify/functions/get_single_recipe?recipeId=${postId}`)
+      ///.netlify/functions/get_my_recipes?userId=${}
+        // method: 'POST',
+        // body: JSON.stringify({
+        //   userId: user.uid,
+        //   RecipeId: docRef.id, // adding recipeId 
+        //   username: postUsername,
+        //   recipename: postRecipeName,
+        //   recipeUrl: postRecipeUrl,
+        //   imageUrl: postImageUrl,
+        //   ingredients: postIngredients,
+        //   instructions: postInstructions,
+        //   userRating: postUserRating            
+        // })
+      
 
       let RecipePost = await response.json()
       console.log(RecipePost)

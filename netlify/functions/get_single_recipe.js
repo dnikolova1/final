@@ -4,21 +4,27 @@ let firebase = require('./firebase')
 exports.handler = async function(event) {
   
   let queryStringPostId = event.queryStringParameters.postId
-  console.log(queryStringPostId)
+  console.log(event)
+  console.log(event.queryStringParameters)
+  console.log(event.queryStringParameters.recipeId)
   console.log('hello from the back-end!')
   
   let db = firebase.firestore()                             // define a variable so we can use Firestore
   let recipesData = []                                        // an empty Array
 
-  let recipesQuery = await db.collection('recipes') // posts from Firestore
-                           .where('postId', '==', queryStringUserId) // posts that match this user ID
-                           .get()
-  let recipes = recipesQuery.docs                               // the post documents themselves
+  let recipesQuery = await db.collection('recipes').get()
+  let recipes = recipesQuery.docs   
   
   // loop through the post documents
   for (let i=0; i<recipes.length; i++) {
-    let recipeId = recipes[i].id                                // the ID for the given post 
+    let recipeId = recipes[i].id                                // the ID for the given post
     let recipeData = recipes[i].data()                          // the rest of the post data
+    console.log(recipeData)
+    let myrecipeQuery = await db.collection('recipes')           // likes from Firestore
+                                .where('postId','==', recipeId) // posts that match this user ID
+                                .get()
+    console.log(myrecipeQuery)
+
     let likesQuery = await db.collection('likes')           // likes from Firestore
                              .where('postId', '==', recipeId) // for the given postId
                              .get()
@@ -34,24 +40,24 @@ exports.handler = async function(event) {
       commentsData.push({
         username: comment.username,                         // the author of the comment
         text: comment.text                                  // the comment text
-      })
+    })
     }
 
-    // // add a new Object of our own creation to the postsData Array
-    // recipesData.push({
-    //   id: recipeId,                                           // the post ID
-    //   imageUrl: recipeData.imageUrl,                          // the image URL
-    //   username: recipeData.username,                          // the username
-    //   likes: likesQuery.size,                               // number of likes
-    //   comments: commentsData,                                // an Array of comments
-    //   userId: recipeData.userId,
-    //   recipename: recipeData.recipename,
-    //   recipeUrl: recipeData.recipeUrl,
-    //   imageUrl: recipeData.imageUrl, 
-    //   ingredients: recipeData.ingredients,
-    //   instructions: recipeData.instructions,
-    //   userRating: recipeData.userRating
-    // })
+   // add a new Object of our own creation to the postsData Array
+    recipesData.push({
+      id: recipeId,                                           // the post ID
+      imageUrl: recipeData.imageUrl,                          // the image URL
+      username: recipeData.username,                          // the username
+      likes: likesQuery.size,                               // number of likes
+      comments: commentsData,                                // an Array of comments
+      userId: recipeData.userId,
+      recipename: recipeData.recipename,
+      recipeUrl: recipeData.recipeUrl,
+      imageUrl: recipeData.imageUrl, 
+      ingredients: recipeData.ingredients,
+      instructions: recipeData.instructions,
+      userRating: recipeData.userRating
+    })
   }
   
   // return an Object in the format that a Netlify lambda function expects
