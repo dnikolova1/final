@@ -256,7 +256,7 @@ async function renderPost(post) {
     console.log(`post ${postId} post full recipe button clicked!`)
     // hiding form and other recipes
     document.querySelector('.recipes').innerHTML = ""
-    document.querySelector('.form').innerHTML = ""
+    document.querySelector('form').classList.add('hidden')
   
     // render recipe 
     async function renderRecipe(post) {
