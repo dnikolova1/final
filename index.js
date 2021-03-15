@@ -180,7 +180,7 @@ async function renderPost(post) {
 
         <div class="flex"> 
           <div class="md:mx-0 mx-4 w-full">
-            <span class="full-recipe-button font-bold text-pink-500"> Full Recipe </span><br/>
+            <span class="full-recipe-button font-bold text-pink-500 hover:text-pink-600"> See Full Recipe </span><br/>
           </div>
         </div>
 
