@@ -281,10 +281,6 @@ async function renderPost(post) {
           </div>
 
           <div class="flex">
-            <div class="text-3xl md:mx-0 mx-4 w-2/3">
-              <button class="upvotes-button text-base bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-xl">👍 Upvote</button>
-              <span class="upvotes text-base">${post.likes}</span>
-            </div>
             <div class="text-3xl md:mx-0 mx-4 w-1/2">
               <span class="text-base">User Rating: </span>
               <span class="rating text-base bg-blue-300 text-white px-4 py-2 rounded-xl">${post.userRating}</span>
@@ -311,27 +307,12 @@ async function renderPost(post) {
             </div>
           </div>
 
-          <div class="flex"> 
-            <div class="w-full md:mx-0 mx-4">
-              ${renderCommentForm()}
-            </div>
-          </div>
-        </div>
+    
       `)}
+      
       // fetch recipe from firebase - need to add functionality that ensures recipe ID matches recipe ID above
       let response = await fetch(`/.netlify/functions/get_single_recipe?recipeId=${postId}`)
-        // method: 'POST',
-        // body: JSON.stringify({
-        //   userId: user.uid,
-        //   RecipeId: docRef.id, // adding recipeId 
-        //   username: postUsername,
-        //   recipename: postRecipeName,
-        //   recipeUrl: postRecipeUrl,
-        //   imageUrl: postImageUrl,
-        //   ingredients: postIngredients,
-        //   instructions: postInstructions,
-        //   userRating: postUserRating            
-        // })
+      
       
       let RecipePost = await response.json()
       for (let i=0; i<RecipePost.length; i++) {
@@ -339,6 +320,7 @@ async function renderPost(post) {
         console.log(RecipePost)
         renderRecipe(RecipePost[0])
       }
+      
 })
 
 }
